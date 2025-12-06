@@ -1,16 +1,28 @@
+/* ===== DECLARAÇÃO DO MIXIN (precisa vir primeiro!) ===== */
 
-    /* ===== THEME VARS (mantém seu mixin) ===== */
+@mixin theme-colors($dark: false) {
+  @if $dark == true {
+    --bg-color: #0d0d0f;
+    --text-color: #ffffff;
+    --card-color: #1a1a1d;
+  } @else {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-color: #f5f5f5;
+  }
+}
+
+/* ===== THEME VARS ===== */
 :root {
   --color-primary: #ff3e67; /* mantém para o restante do site */
   --logo-purple: #a855f7;   /* cor específica da logo/texto */
 }
 
-/* Aplica variáveis via seu mixin já existente (mantive a lógica) */
+/* Agora sim os includes funcionam */
 .dark-mode { @include theme-colors(true); }
 .light-mode { @include theme-colors(false); }
 
-
-/* ===== HEADER CORRIGIDO ===== */
+/* ===== HEADER ===== */
 .header {
   width: 100%;
   padding: 15px 25px;
@@ -45,8 +57,7 @@
   object-fit: contain;
 }
 
-/* ====== SWITCH UIVERSE (SEM TEXTO) ====== */
-
+/* ===== SWITCH UIVERSE ===== */
 .theme-toggle {
   position: absolute;
   top: 15px;
@@ -84,8 +95,6 @@
   position: absolute;
   background: var(--circle-bg);
   border-radius: inherit;
-  background-repeat: no-repeat;
-  background-position: center center;
   transition: left 150ms ease, transform 150ms ease;
   display: flex;
   justify-content: center;
@@ -96,31 +105,26 @@
   left: calc(100% - var(--circle-diameter));
 }
 
-
 input:checked + .slider {
   background-color: var(--color-primary);
 }
+
 input:checked + .slider::before {
   transform: translateX(26px);
 }
 
-@mixin theme-colors($dark: false) {
-  @if $dark == true {
-    --bg-color: #0d0d0f;
-    --text-color: #ffffff;
-    --card-color: #1a1a1d;
-  } @else {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --card-color: #f5f5f5;
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 600px) {
+  .logo {
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
   }
 }
 
-/* ===== responsividade simples ===== */
-@media (max-width: 600px) {
-  .logo { font-size: 20px; }
-  .logo-icon { width: 34px; height: 34px; }
-}
 
 
 
