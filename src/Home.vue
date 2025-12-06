@@ -47,12 +47,14 @@ onMounted(() => {
       </div>
 
       <div class="theme-toggle">
-        <span class="theme-label">{{ isDarkMode ? 'Modo Noturno' : 'Modo Claro' }}</span>
-        <label class="switch">
-          <input type="checkbox" :checked="isDarkMode" @change="toggleTheme" />
-          <span class="slider round"></span>
-        </label>
-      </div>
+  <label class="ui-switch">
+    <input type="checkbox" :checked="isDarkMode" @change="toggleTheme" />
+    <span class="slider">
+      <span class="circle"></span>
+    </span>
+  </label>
+</div>
+
     </header>
 
     <!-- SUBHEADER -->
@@ -182,44 +184,59 @@ body {
   margin: 0;
 }
 
-/* Theme toggle */
+
+  /* ====== SWITCH UIVERSE (SEM TEXTO) ====== */
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  position: absolute;
+  top: 15px;
+  right: 20px;
 }
 
-/* Switch */
-.switch {
+.ui-switch {
+  --switch-bg: rgb(135, 150, 165);
+  --switch-width: 48px;
+  --switch-height: 20px;
+  --circle-diameter: 32px;
+  --circle-bg: rgb(0, 56, 146);
+  --circle-inset: calc((var(--circle-diameter) - var(--switch-height)) / 2);
+}
+
+.ui-switch input {
+  display: none;
+}
+
+.ui-switch .slider {
+  appearance: none;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: var(--switch-bg);
+  border-radius: 999px;
   position: relative;
-  width: 50px;
-  height: 24px;
+  cursor: pointer;
 }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
+
+.ui-switch .circle {
+  top: calc(var(--circle-inset) * -1);
+  left: 0;
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
   position: absolute;
-  inset: 0;
-  background-color: #ccc;
-  border-radius: 24px;
-  transition: .3s;
+  background: var(--circle-bg);
+  border-radius: inherit;
+  background-repeat: no-repeat;
+  background-position: center center;
+  transition: left 150ms ease, transform 150ms ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.slider::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  bottom: 4px;
-  width: 16px;
-  height: 16px;
-  background-color: white;
-  border-radius: 50%;
-  transition: .3s;
+
+.ui-switch input:checked + .slider .circle {
+  left: calc(100% - var(--circle-diameter));
 }
-.switch input:checked + .slider {
-  background-color: var(--color-primary);
-}
-.switch input:checked + .slider::before {
-  transform: translateX(26px);
-}
+
+
+
 
 /* pequenos ajustes responsivos */
 @media (max-width: 600px) {
@@ -234,6 +251,7 @@ body {
 .load-more-btn { padding: 10px 30px; background: var(--color-primary); color: #fff; border-radius: 30px; border: none; cursor: pointer; }
 .footer { background: var(--color-footer-background); padding: 40px 20px; margin-top: 40px; }
 </style>
+
 
 
 
