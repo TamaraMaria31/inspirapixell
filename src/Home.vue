@@ -2,15 +2,12 @@
   <div class="inspire-pixel-page">
     
     <header class="header">
-      <div class="logo-container">
-        <svg xmlns="@/assets/logoo.svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff3e67" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
-          <path d="M12 2a10 10 0 0 0-9.67 12.83l.53 1.05a1 1 0 0 0 1.76 0l.53-1.05A10 10 0 1 0 12 2z"></path>
-          <path d="M12 18a6 6 0 0 0 0-12"></path>
-          <path d="M12 18a6 6 0 0 1 0-12"></path>
-        </svg>
-        <h1 class="logo">InspiraPixel</h1>
-      </div>
-      
+  <div class="logo-container">
+    <img src="@/assets/logoo.svg" class="logo-icon" alt="Logo">
+    <h1 class="logo">InspiraPixel</h1>
+  </div>
+</header>
+
       <div class="theme-toggle">
         <span class="theme-label">{{ isDarkMode ? 'Modo Noturno' : 'Modo Claro' }}</span>
         <label class="switch">
@@ -119,3 +116,4 @@ onMounted(() => {
 });
 
 </script>
+
