@@ -50,7 +50,7 @@
 .theme-toggle {
   display: flex;
   align-items: center;
-  gap: 12px; 
+  gap: 16px; 
 }
 
 /* Switch */
@@ -94,6 +94,7 @@ input:checked + .slider::before {
   .logo { font-size: 20px; }
   .logo-icon { width: 34px; height: 34px; }
 }
+
 
 
 
