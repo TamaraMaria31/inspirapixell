@@ -1,22 +1,15 @@
 <script setup>
-import { ref, onMounted, defineProps, defineEmits, watch } from 'vue';
-import Home from './Home.vue';
+import { ref, onMounted } from 'vue';
 import { fetchImages } from './api';
 import logoo from '@/assets/logoo.svg';
-
-const props = defineProps({
-  isDarkMode: Boolean
-});
-
-const emit = defineEmits(['toggleTheme']);
 
 const images = ref([]);
 const currentPage = ref(1);
 const isLoading = ref(false);
+const isDarkMode = ref(true);
 
 const loadMore = async () => {
   if (isLoading.value) return;
-
   isLoading.value = true;
   const newImages = await fetchImages(currentPage.value, 24);
   images.value = [...images.value, ...newImages];
@@ -28,25 +21,18 @@ const subscribe = () => {
   alert("Inscrição simulada! Obrigado por assinar.");
 };
 
-// Tema
-const isDarkMode = ref(true);
-
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value;
-  emit('toggleTheme', isDarkMode.value);
+  // salva preferência
+  localStorage.setItem('theme-mode', isDarkMode.value ? 'dark' : 'light');
+  document.body.className = isDarkMode.value ? 'dark-mode' : 'light-mode';
 };
 
-watch(isDarkMode, (newVal) => {
-  document.body.className = newVal ? 'dark-mode' : 'light-mode';
-}, { immediate: true });
-
 onMounted(() => {
+  const saved = localStorage.getItem('theme-mode');
+  if (saved) isDarkMode.value = saved === 'dark';
+  document.body.className = isDarkMode.value ? 'dark-mode' : 'light-mode';
   loadMore();
-
-  const savedTheme = localStorage.getItem('theme-mode');
-  if (savedTheme) {
-    isDarkMode.value = savedTheme === 'dark';
-  }
 });
 </script>
 
@@ -125,36 +111,58 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+/* THEME / VARS - usando variáveis CSS (sem mixins externos) */
 :root {
-  transition: background-color 0.5s, color 0.5s;
+  --color-primary: #ff3e67;
+  --logo-purple: #a855f7;
+  --color-background: #ffffff;
+  --color-text: #333333;
+  --color-card-background: #f5f5f5;
+  --color-footer-background: #eeeeee;
 }
 
+/* modo escuro */
 .dark-mode {
-  background-color: #1a1a1a;
-  color: #f0f0f0;
+  --color-background: #1a1a1a;
+  --color-text: #f0f0f0;
+  --color-card-background: #2c2c2c;
+  --color-footer-background: #222222;
 }
 
+/* modo claro (opcional, reafirma) */
 .light-mode {
-  background-color: #ffffff;
-  color: #333333;
+  --color-background: #ffffff;
+  --color-text: #333333;
+  --color-card-background: #f5f5f5;
+  --color-footer-background: #eeeeee;
 }
 
-  /* ===== HEADER ===== */
+/* Reset/Globais */
+* { box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.4s, color 0.4s;
+}
+
+/* ===== HEADER ===== */
 .header {
   width: 100%;
   padding: 15px 25px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* separa logo e botão */
+  justify-content: space-between; /* separa logo e toggle */
   gap: 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 /* Container da logo */
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 12px; /* espaçamento entre logo e texto */
+  gap: 12px;
 }
 
 /* Ícone */
@@ -162,24 +170,70 @@ onMounted(() => {
   width: 40px;
   height: 40px;
   object-fit: contain;
+  display: block;
 }
 
 /* Texto da logo */
 .logo {
   font-size: 27px;
   font-weight: 700;
-  color: #a855f7; /* Roxo */
+  color: var(--logo-purple);
   font-family: 'Poppins', sans-serif;
   margin: 0;
 }
 
-/* Toggle de tema */
+/* Theme toggle */
 .theme-toggle {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
+/* Switch */
+.switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute;
+  inset: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: .3s;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+}
+.switch input:checked + .slider {
+  background-color: var(--color-primary);
+}
+.switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+/* pequenos ajustes responsivos */
+@media (max-width: 600px) {
+  .logo { font-size: 20px; }
+  .logo-icon { width: 34px; height: 34px; }
+}
+
+/* GRID e footer básicos (mantive simplificado) */
+.image-grid { display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.grid-item { background: var(--color-card-background); border-radius: 8px; overflow: hidden; }
+.load-more-item { grid-column: 1 / -1; display:flex; justify-content:center; padding: 10px 0; }
+.load-more-btn { padding: 10px 30px; background: var(--color-primary); color: #fff; border-radius: 30px; border: none; cursor: pointer; }
+.footer { background: var(--color-footer-background); padding: 40px 20px; margin-top: 40px; }
 </style>
+
 
 
