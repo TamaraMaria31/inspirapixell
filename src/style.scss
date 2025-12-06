@@ -9,24 +9,28 @@
 .dark-mode { @include theme-colors(true); }
 .light-mode { @include theme-colors(false); }
 
-/* ===== HEADER ===== */
+
+}/* ===== HEADER CORRIGIDO ===== */
 .header {
   width: 100%;
   padding: 15px 25px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo à esquerda e toggle à direita */
+  justify-content: space-between; /* SEPARA logotipo para esquerda e toggle para direita */
   gap: 20px;
   background: none;
-  border-bottom: 1px solid rgba(0,0,0,0.06); /* leve */
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-/* Container da logo (imagem + texto lado a lado) */
-.logo-container {
+
+
+/* Theme toggle (botão do modo escuro) */
+.theme-toggle {
   display: flex;
   align-items: center;
-  gap: 12px; /* espaço entre logo e texto */
+  gap: 10px; /* adiciona espaço interno */
 }
+
 
 /* Imagem da logo */
 .logo-icon {
@@ -113,6 +117,7 @@ input:checked + .slider::before {
   .logo { font-size: 20px; }
   .logo-icon { width: 34px; height: 34px; }
 }
+
 
 
 
