@@ -3,7 +3,7 @@
     
     <header class="header">
       <div class="logo-container">
-        <svg xmlns="InspiraPixel\inspirapixel\src\assets\logoo.svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff3e67" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+        <svg xmlns="@/assets/logoo.svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff3e67" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
           <path d="M12 2a10 10 0 0 0-9.67 12.83l.53 1.05a1 1 0 0 0 1.76 0l.53-1.05A10 10 0 1 0 12 2z"></path>
           <path d="M12 18a6 6 0 0 0 0-12"></path>
           <path d="M12 18a6 6 0 0 1 0-12"></path>
@@ -117,4 +117,5 @@ const subscribe = () => {
 onMounted(() => {
   loadMore();
 });
+
 </script>
