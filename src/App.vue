@@ -44,4 +44,18 @@ onMounted(() => {
   background-color: #ffffff;
   color: #333333;
 }
+
+  <script setup>
+import logoo from '@/assets/logoo.svg'
+</script>
+
+<template>
+  <header class="header">
+    <div class="logo-container">
+      <img :src="logoo" class="logo-icon" alt="Logo" />
+      <h1 class="logo">InspiraPixel</h1>
+    </div>
+  </header>
+</template>
+
 </style>
