@@ -10,7 +10,9 @@
 .light-mode { @include theme-colors(false); }
 
 
-}/* ===== HEADER CORRIGIDO ===== */
+}
+
+/* ===== HEADER CORRIGIDO ===== */
 .header {
   width: 100%;
   padding: 15px 25px;
@@ -22,7 +24,12 @@
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-
+/* Container da logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* garante espaçamento entre logo e texto */
+}
 
 /* Theme toggle (botão do modo escuro) */
 .theme-toggle {
@@ -31,44 +38,6 @@
   gap: 10px; /* adiciona espaço interno */
 }
 
-
-/* Imagem da logo */
-.logo-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  display: block;
-}
-
-/* Texto "InspiraPixel" (FORÇA o roxo específico) */
-.logo {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--logo-purple); /* garante roxo */
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", "Inter", sans-serif;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-/* Ajuste fino para alinhamento vertical (caso precise) */
-.logo-container .logo {
-  transform: translateY(1px); /* ajuste opcional para centrar com o ícone */
-}
-
-/* ===== Theme toggle (mantive o seu estilo) ===== */
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  .theme-label {
-    font-size: 0.9rem;
-    margin-right: 6px;
-    color: var(--color-text);
-  }
-}
 
 /* Switch */
 .switch {
@@ -117,6 +86,7 @@ input:checked + .slider::before {
   .logo { font-size: 20px; }
   .logo-icon { width: 34px; height: 34px; }
 }
+
 
 
 
