@@ -1,36 +1,80 @@
+<script setup>
+import { ref, onMounted, defineProps, defineEmits, watch } from 'vue';
+import Home from './Home.vue';
+import { fetchImages } from './api';
+import logoo from '@/assets/logoo.svg';
+
+const props = defineProps({
+  isDarkMode: Boolean
+});
+
+const emit = defineEmits(['toggleTheme']);
+
+const images = ref([]);
+const currentPage = ref(1);
+const isLoading = ref(false);
+
+const loadMore = async () => {
+  if (isLoading.value) return;
+
+  isLoading.value = true;
+  const newImages = await fetchImages(currentPage.value, 24);
+  images.value = [...images.value, ...newImages];
+  currentPage.value++;
+  isLoading.value = false;
+};
+
+const subscribe = () => {
+  alert("Inscrição simulada! Obrigado por assinar.");
+};
+
+// Tema
+const isDarkMode = ref(true);
+
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value;
+  emit('toggleTheme', isDarkMode.value);
+};
+
+watch(isDarkMode, (newVal) => {
+  document.body.className = newVal ? 'dark-mode' : 'light-mode';
+}, { immediate: true });
+
+onMounted(() => {
+  loadMore();
+
+  const savedTheme = localStorage.getItem('theme-mode');
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark';
+  }
+});
+</script>
+
 <template>
   <div class="inspire-pixel-page">
-    
+
+    <!-- HEADER -->
     <header class="header">
-  <div class="logo-container">
-    <img src="./assets/logoo.svg" class="logo-icon" alt="InspiraPixel Logo"> 
-    <h1 class="logo">InspiraPixel</h1>
-  </div>
-  </header>
+      <div class="logo-container">
+        <img :src="logoo" class="logo-icon" alt="InspiraPixel Logo">
+        <h1 class="logo">InspiraPixel</h1>
+      </div>
 
       <div class="theme-toggle">
         <span class="theme-label">{{ isDarkMode ? 'Modo Noturno' : 'Modo Claro' }}</span>
         <label class="switch">
-          <input type="checkbox" :checked="isDarkMode" @change="$emit('toggleTheme')" />
+          <input type="checkbox" :checked="isDarkMode" @change="toggleTheme" />
           <span class="slider round"></span>
         </label>
       </div>
     </header>
 
-   <div class="subheader">
-  <p class="tagline">Sua dose diária de inspiração visual.</p>
-</div>
-
-<main class="image-grid">
-  <div v-for="image in images" :key="image.id" class="grid-item">
-    <img :src="image.imageUrl" :alt="image.author" loading="lazy" />
-    <div class="overlay">
-      <span>{{ image.author }}</span>
+    <!-- SUBHEADER -->
+    <div class="subheader">
+      <p class="tagline">Sua dose diária de inspiração visual.</p>
     </div>
-  </div>
-</main>
 
-
+    <!-- GRID DE IMAGENS -->
     <main class="image-grid">
       <div v-for="image in images" :key="image.id" class="grid-item">
         <img :src="image.imageUrl" :alt="image.author" loading="lazy" />
@@ -40,16 +84,14 @@
       </div>
     </main>
 
-     <!-- Botão -->
-  <div class="grid-item load-more-item">
-    <main>
-    <button @click="loadMore" :disabled="isLoading" class="load-more-btn">
-      {{ isLoading ? 'Carregando...' : 'Carregar Mais' }}
-    </button>
-  
-</main>
-</div>
-    
+    <!-- BOTÃO CARREGAR MAIS -->
+    <div class="grid-item load-more-item">
+      <button @click="loadMore" :disabled="isLoading" class="load-more-btn">
+        {{ isLoading ? 'Carregando...' : 'Carregar Mais' }}
+      </button>
+    </div>
+
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-section contact">
         <h3>Contato</h3>
@@ -78,43 +120,23 @@
         </ul>
       </div>
     </footer>
+
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, defineProps, defineEmits } from 'vue';
-import { fetchImages } from './api'; // Reutilize o serviço da resposta anterior
+<style lang="scss">
+:root {
+  transition: background-color 0.5s, color 0.5s;
+}
 
-// Define as propriedades (props) e eventos (emits)
-const props = defineProps({
-  isDarkMode: Boolean
-});
+.dark-mode {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
 
-defineEmits(['toggleTheme']);
-
-const images = ref([]);
-const currentPage = ref(1);
-const isLoading = ref(false);
-
-const loadMore = async () => {
-  if (isLoading.value) return;
-
-  isLoading.value = true;
-  // Busca 24 imagens para preencher 4 colunas perfeitamente
-  const newImages = await fetchImages(currentPage.value, 24); 
-  images.value = [...images.value, ...newImages];
-  currentPage.value++;
-  isLoading.value = false;
-};
-
-const subscribe = () => {
-  alert("Inscrição simulada! Obrigado por assinar.");
-};
-
-onMounted(() => {
-  loadMore();
-});
-
-</script>
-
+.light-mode {
+  background-color: #ffffff;
+  color: #333333;
+}
+</style>
 
