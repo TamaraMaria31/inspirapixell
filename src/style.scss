@@ -58,31 +58,41 @@ body {
 }
 
 /* --- HEADER e Theme Toggle --- */
+/* ===== HEADER ===== */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    margin-bottom: 20px;
+  width: 100%;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: none;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.logotipo{
-  width: 32px;
-  height: 32px;
+/* Container da logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espaço entre imagem e texto */
 }
 
-
-.subheader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    .tagline {
-      font-size: 1.1rem;
-      color: var(--color-text);
-      opacity: 0.8;
-    }
+/* Imagem da logo */
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
+
+/* Texto "InspiraPixel" */
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  color: #a855f7; /* roxo */
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
 
 /* Theme Toggle (Switch) */
 .theme-toggle {
@@ -319,4 +329,5 @@ input:checked + .slider::before {
     }
 
 }
+
 
