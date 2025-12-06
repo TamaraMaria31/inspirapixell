@@ -3,10 +3,10 @@
     
     <header class="header">
   <div class="logo-container">
-    <img src="@/assets/logoo.svg" class="logo-icon" alt="Logo">
+    <img src="./assets/logoo.svg" class="logo-icon" alt="InspiraPixel Logo"> 
     <h1 class="logo">InspiraPixel</h1>
   </div>
-</header>
+  </header>
 
       <div class="theme-toggle">
         <span class="theme-label">{{ isDarkMode ? 'Modo Noturno' : 'Modo Claro' }}</span>
@@ -116,4 +116,5 @@ onMounted(() => {
 });
 
 </script>
+
 
