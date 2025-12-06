@@ -138,5 +138,48 @@ onMounted(() => {
   background-color: #ffffff;
   color: #333333;
 }
+
+  /* ===== HEADER ===== */
+.header {
+  width: 100%;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* separa logo e botão */
+  gap: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Container da logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* espaçamento entre logo e texto */
+}
+
+/* Ícone */
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Texto da logo */
+.logo {
+  font-size: 27px;
+  font-weight: 700;
+  color: #a855f7; /* Roxo */
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+/* Toggle de tema */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 </style>
+
 
